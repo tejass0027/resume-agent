@@ -15,7 +15,7 @@ from typing import Callable, Optional
 from google import genai
 from google.genai import errors, types
 
-DEFAULT_MODEL = "gemini-2.5-flash"
+DEFAULT_MODEL = "gemini-3.6-flash"
 MAX_OUTPUT_TOKENS = 2048
 DEFAULT_MAX_RETRIES = 5
 BASE_BACKOFF_SECONDS = 1.0
