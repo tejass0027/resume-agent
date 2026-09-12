@@ -1,44 +1,49 @@
 # AI Resume Screener
 
-A Streamlit app that screens up to 1,000 PDF resumes against a job description using Gemini, and returns a sorted, evidence-backed leaderboard.
+## What it does
 
-Each resume is checked against the job description's Must-Have and Nice-to-Have requirements. Gemini is forced (via a JSON response schema) to return a strict structured evaluation, quoting verbatim evidence from the resume for every requirement rather than guessing — so a candidate is only credited with a skill or years of experience if it's explicitly written down.
+You give it a job description and a stack of resumes (PDF files) — it reads every resume, compares it against the job's requirements, and hands you back a ranked shortlist.
 
-## Features
+For each candidate you get:
+- A **match score** out of 100
+- A **status**: Shortlisted, Flagged, or Rejected
+- Their **strengths** and **weaknesses** for this specific role
+- A **quote pulled directly from their resume** as proof for each requirement — it never guesses or assumes a skill just because of a job title. If the resume doesn't say it, it's marked as not met.
 
-- Paste a job description, upload PDF resumes, click **Run Screening**.
-- Resumes are screened concurrently (bounded by a semaphore) with automatic exponential backoff on rate limits and transient server errors.
-- Each candidate gets a `match_score` (0-100), a `status` (`Shortlisted` / `Flagged` / `Rejected`), strengths, weaknesses, and a per-requirement breakdown with evidence quotes.
-- Leaderboard sorted by match score, with expandable per-candidate detail.
-- Export results to CSV.
-- Each user supplies their own Gemini API key at runtime (entered in the sidebar, kept only in session memory) — no shared billing. Gemini has a free tier, so this can be run at no cost.
+Results show up as a leaderboard, best match first, and can be downloaded as a CSV file for the rest of your team.
 
-## Project layout
+You can screen up to 1,000 resumes in one go, and you choose which AI does the reading — Google Gemini, Anthropic Claude, or OpenAI ChatGPT.
 
-| File | Purpose |
-|---|---|
-| `app.py` | Streamlit UI |
-| `gemini_client.py` | Prompt construction, response schema, async batch screening with concurrency + retry/backoff |
-| `pdf_utils.py` | PDF text extraction (PyMuPDF) |
-| `requirements.txt` | Python dependencies |
+## How to make it work
 
-## Setup
+1. **Get a free API key** from whichever AI you want to use:
+   - Gemini (free): [aistudio.google.com/apikey](https://aistudio.google.com/apikey)
+   - Claude: [console.anthropic.com/settings/keys](https://console.anthropic.com/settings/keys)
+   - ChatGPT: [platform.openai.com/api-keys](https://platform.openai.com/api-keys)
 
-```bash
-python -m venv .venv
-source .venv/Scripts/activate   # Windows: .venv\Scripts\activate
-pip install -r requirements.txt
-```
+2. **One-time setup** — open a terminal in this folder and run:
+   ```bash
+   python -m venv .venv
+   .venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
 
-## Run
+3. **Start the app**:
+   ```bash
+   streamlit run app.py
+   ```
+   This opens the app in your browser.
 
-```bash
-streamlit run app.py
-```
+4. In the sidebar, **choose your AI provider** and **paste in your API key**.
 
-Open the app in your browser, enter your [Gemini API key](https://aistudio.google.com/apikey) (free) in the sidebar, paste a job description, upload resumes, and run the screening.
+5. **Paste the job description** and **upload the resumes** (PDF only).
 
-## Notes
+6. Click **Run Screening** and wait for the leaderboard to fill in.
 
-- Resumes must be text-based PDFs; scanned image PDFs without a text layer will be skipped (no OCR).
-- The `Advanced settings` panel in the sidebar lets you change the model, concurrency limit, and retry count. Default model is `gemini-2.5-flash`; free-tier rate limits are fairly low, so keep concurrency modest if you're on the free tier.
+7. Click **Export to CSV** to save the results.
+
+## Good to know
+
+- Your API key is never saved — you enter it fresh each time you open the app, and it's only used to talk to the AI provider you picked.
+- Resumes need to be real, text-based PDFs. A scanned photo/image of a resume with no selectable text won't work.
+- If you're on a free-tier API key, lower "Max concurrent requests" in the sidebar's Advanced settings so you don't hit rate limits when screening a large batch.
