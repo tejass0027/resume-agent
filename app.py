@@ -1,4 +1,4 @@
-"""Streamlit UI for batch resume screening against a job description via Claude."""
+"""Streamlit UI for batch resume screening against a job description via an LLM."""
 
 from __future__ import annotations
 
@@ -7,27 +7,34 @@ import asyncio
 import pandas as pd
 import streamlit as st
 
-from gemini_client import DEFAULT_MODEL, run_batch
 from pdf_utils import extract_text_from_pdf
+from providers import PROVIDERS
 
 MAX_RESUMES = 1000
 
 st.set_page_config(page_title="AI Resume Screener", page_icon="🧾", layout="wide")
 
-st.title("🧾 AI Resume Screener")
-st.caption("Evidence-based resume screening at scale, powered by Gemini.")
-
 with st.sidebar:
     st.header("Settings")
+    provider_name = st.selectbox("AI Provider", list(PROVIDERS.keys()))
+    provider = PROVIDERS[provider_name]
     api_key = st.text_input(
-        "Google AI (Gemini) API Key",
+        provider.key_label,
         type="password",
-        help="Used only for this session's requests. Never stored or logged. Get one free at aistudio.google.com/apikey.",
+        help=provider.key_help,
+        key=f"api_key_{provider_name}",
     )
     with st.expander("Advanced settings"):
-        model = st.text_input("Model", value=DEFAULT_MODEL)
-        max_concurrency = st.slider("Max concurrent requests", 1, 20, 5)
-        max_retries = st.slider("Max retries on rate limit / server errors", 0, 8, 5)
+        model = st.text_input(
+            "Model",
+            value=provider.module.DEFAULT_MODEL,
+            key=f"model_{provider_name}",
+        )
+        max_concurrency = st.slider("Max concurrent requests", 1, 20, 5, key="max_concurrency")
+        max_retries = st.slider("Max retries on rate limit / server errors", 0, 8, 5, key="max_retries")
+
+st.title("🧾 AI Resume Screener")
+st.caption(f"Evidence-based resume screening at scale, powered by {provider_name}.")
 
 st.subheader("1. Job Description")
 job_description = st.text_area(
@@ -76,7 +83,7 @@ if run_clicked:
                 progress_bar.progress(done / total, text=f"Screened {done}/{total} resumes...")
 
             results = asyncio.run(
-                run_batch(
+                provider.module.run_batch(
                     api_key=api_key,
                     job_description=job_description,
                     resumes=resumes,
