@@ -7,7 +7,7 @@ import asyncio
 import pandas as pd
 import streamlit as st
 
-from claude_client import DEFAULT_MODEL, run_batch
+from gemini_client import DEFAULT_MODEL, run_batch
 from pdf_utils import extract_text_from_pdf
 
 MAX_RESUMES = 1000
@@ -15,14 +15,14 @@ MAX_RESUMES = 1000
 st.set_page_config(page_title="AI Resume Screener", page_icon="🧾", layout="wide")
 
 st.title("🧾 AI Resume Screener")
-st.caption("Evidence-based resume screening at scale, powered by Claude.")
+st.caption("Evidence-based resume screening at scale, powered by Gemini.")
 
 with st.sidebar:
     st.header("Settings")
     api_key = st.text_input(
-        "Anthropic API Key",
+        "Google AI (Gemini) API Key",
         type="password",
-        help="Used only for this session's requests. Never stored or logged.",
+        help="Used only for this session's requests. Never stored or logged. Get one free at aistudio.google.com/apikey.",
     )
     with st.expander("Advanced settings"):
         model = st.text_input("Model", value=DEFAULT_MODEL)
