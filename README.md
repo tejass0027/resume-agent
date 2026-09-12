@@ -30,9 +30,9 @@ You can screen up to 1,000 resumes in one go, and you choose which AI does the r
 
 3. **Start the app**:
    ```bash
-   streamlit run app.py
+   uvicorn server:app --port 8000
    ```
-   This opens the app in your browser.
+   Then open [http://localhost:8000](http://localhost:8000) in your browser.
 
 4. In the sidebar, **choose your AI provider** and **paste in your API key**.
 
@@ -44,6 +44,6 @@ You can screen up to 1,000 resumes in one go, and you choose which AI does the r
 
 ## Good to know
 
-- Your API key is never saved — you enter it fresh each time you open the app, and it's only used to talk to the AI provider you picked.
+- Your API key and job description are remembered in your own browser (never sent anywhere except to the AI provider you picked) so you don't have to retype them every time you open the app. Clearing your browser's site data for this page will reset them.
 - Resumes need to have real, selectable text. A scanned photo/image of a resume (PDF or Word) with no selectable text won't work.
 - If you're on a free-tier API key, lower "Max concurrent requests" in the sidebar's Advanced settings so you don't hit rate limits when screening a large batch.

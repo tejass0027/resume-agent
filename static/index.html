@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Resume Screener</title>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div class="layout">
+    <aside class="sidebar">
+      <h2>Settings</h2>
+
+      <label for="provider">AI Provider</label>
+      <select id="provider"></select>
+
+      <label id="api-key-label" for="api-key">API Key</label>
+      <div class="key-row">
+        <input id="api-key" type="password" autocomplete="off" spellcheck="false" />
+        <button id="toggle-key" type="button" title="Show/hide key">show</button>
+      </div>
+      <p id="key-help" class="help"></p>
+
+      <details id="advanced">
+        <summary>Advanced settings</summary>
+
+        <label for="model">Model</label>
+        <input id="model" type="text" />
+
+        <label for="max-concurrency">Max concurrent requests: <span id="max-concurrency-value">5</span></label>
+        <input id="max-concurrency" type="range" min="1" max="20" value="5" />
+
+        <label for="max-retries">Max retries on rate limit / server errors: <span id="max-retries-value">5</span></label>
+        <input id="max-retries" type="range" min="0" max="8" value="5" />
+      </details>
+    </aside>
+
+    <main>
+      <h1>🧾 AI Resume Screener</h1>
+      <p id="tagline" class="tagline"></p>
+
+      <h2>1. Job Description</h2>
+      <p class="help">Paste the full job description, including must-have and nice-to-have requirements.</p>
+      <textarea id="job-description" rows="10" placeholder="e.g. Senior Backend Engineer&#10;&#10;Must-Haves:&#10;- 5+ years of Python&#10;- ...&#10;&#10;Nice-to-Haves:&#10;- AWS experience&#10;- ..."></textarea>
+
+      <h2>2. Upload Resumes (PDF or Word)</h2>
+      <p class="help">Upload up to 1000 resumes (.pdf or .docx)</p>
+      <input id="files" type="file" accept=".pdf,.docx" multiple />
+      <ul id="file-list" class="file-list"></ul>
+
+      <button id="run-btn" class="primary" disabled>Run Screening</button>
+
+      <div id="progress-wrap" class="progress-wrap" hidden>
+        <div class="progress-bar"><div id="progress-fill" class="progress-fill"></div></div>
+        <p id="progress-text" class="help"></p>
+      </div>
+
+      <div id="warnings"></div>
+
+      <section id="results" hidden>
+        <h2>3. Leaderboard</h2>
+        <div class="metrics" id="metrics"></div>
+        <div class="table-wrap">
+          <table id="leaderboard">
+            <thead><tr><th>Candidate</th><th>File</th><th>Score</th><th>Status</th><th>Years Exp.</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <h2>4. Candidate Details</h2>
+        <div id="details"></div>
+
+        <h2>5. Export</h2>
+        <button id="export-btn">Export to CSV</button>
+      </section>
+    </main>
+  </div>
+  <script src="/static/app.js"></script>
+</body>
+</html>

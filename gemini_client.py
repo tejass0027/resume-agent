@@ -16,7 +16,7 @@ from google import genai
 from google.genai import errors, types
 
 DEFAULT_MODEL = "gemini-3.6-flash"
-MAX_OUTPUT_TOKENS = 2048
+MAX_OUTPUT_TOKENS = 8192
 DEFAULT_MAX_RETRIES = 5
 BASE_BACKOFF_SECONDS = 1.0
 MAX_BACKOFF_SECONDS = 60.0
@@ -173,6 +173,7 @@ async def evaluate_resume(
         response_mime_type="application/json",
         response_schema=RESUME_EVAL_SCHEMA,
         max_output_tokens=MAX_OUTPUT_TOKENS,
+        thinking_config=types.ThinkingConfig(thinking_budget=0),
     )
     async with semaphore:
         while True:

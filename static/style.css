@@ -1,0 +1,276 @@
+:root {
+  --bg: #0e1117;
+  --bg-panel: #161a23;
+  --bg-field: #20242f;
+  --border: #30364a;
+  --text: #e6e6e6;
+  --text-dim: #9aa0ac;
+  --accent: #ff4b4b;
+  --accent-dim: #7a2e2e;
+  --green: #21c55d;
+  --amber: #eab308;
+  --red: #ef4444;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+}
+
+.layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sidebar {
+  width: 320px;
+  flex-shrink: 0;
+  background: var(--bg-panel);
+  border-right: 1px solid var(--border);
+  padding: 24px;
+}
+
+.sidebar h2 {
+  margin-top: 0;
+}
+
+main {
+  flex: 1;
+  padding: 32px 40px;
+  max-width: 900px;
+}
+
+h1 {
+  margin-bottom: 4px;
+}
+
+.tagline {
+  color: var(--text-dim);
+  margin-top: 0;
+}
+
+label {
+  display: block;
+  margin: 16px 0 6px;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.help {
+  color: var(--text-dim);
+  font-size: 13px;
+  margin: 4px 0 12px;
+}
+
+select,
+input[type="text"],
+input[type="password"],
+textarea {
+  width: 100%;
+  background: var(--bg-field);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.key-row {
+  display: flex;
+  gap: 8px;
+}
+
+.key-row input {
+  flex: 1;
+}
+
+.key-row button {
+  background: var(--bg-field);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  border-radius: 6px;
+  padding: 0 12px;
+  cursor: pointer;
+}
+
+details {
+  margin-top: 16px;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--text-dim);
+}
+
+input[type="range"] {
+  width: 100%;
+}
+
+input[type="file"] {
+  color: var(--text-dim);
+}
+
+.file-list {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+button.primary {
+  margin-top: 20px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+button.primary:disabled {
+  background: var(--bg-field);
+  color: var(--text-dim);
+  cursor: not-allowed;
+}
+
+#export-btn {
+  background: var(--bg-field);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 20px;
+  cursor: pointer;
+}
+
+.progress-wrap {
+  margin-top: 20px;
+}
+
+.progress-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--bg-field);
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  transition: width 0.2s ease;
+}
+
+#warnings .warning {
+  background: #3a2f14;
+  border: 1px solid var(--amber);
+  color: #ffd873;
+  padding: 8px 12px;
+  border-radius: 6px;
+  margin-top: 10px;
+  font-size: 13px;
+}
+
+.metrics {
+  display: flex;
+  gap: 16px;
+  margin: 16px 0 24px;
+}
+
+.metric {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 20px;
+  flex: 1;
+}
+
+.metric .value {
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.metric .label {
+  color: var(--text-dim);
+  font-size: 13px;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+}
+
+th, td {
+  text-align: left;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  font-size: 14px;
+}
+
+th {
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+.status-badge {
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+.status-Shortlisted { background: rgba(33,197,93,0.15); color: var(--green); }
+.status-Flagged { background: rgba(234,179,8,0.15); color: var(--amber); }
+.status-Rejected { background: rgba(239,68,68,0.15); color: var(--red); }
+.status-Error { background: rgba(239,68,68,0.15); color: var(--red); }
+
+details.candidate {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+}
+
+details.candidate summary {
+  color: var(--text);
+  font-weight: 600;
+}
+
+details.candidate .section-title {
+  font-weight: 600;
+  margin-top: 14px;
+}
+
+details.candidate ul {
+  margin: 6px 0;
+  padding-left: 20px;
+}
+
+.evidence {
+  color: var(--text-dim);
+  font-style: italic;
+}

@@ -3,9 +3,9 @@
   "configurations": [
     {
       "name": "resume-screener",
-      "runtimeExecutable": ".venv\\Scripts\\streamlit.exe",
-      "runtimeArgs": ["run", "app.py", "--server.headless", "true", "--server.port", "8501"],
-      "port": 8501
+      "runtimeExecutable": ".venv\\Scripts\\uvicorn.exe",
+      "runtimeArgs": ["server:app", "--host", "127.0.0.1", "--port", "8000"],
+      "port": 8000
     }
   ]
 }
