@@ -7,10 +7,20 @@ import asyncio
 import pandas as pd
 import streamlit as st
 
+from docx_utils import extract_text_from_docx
 from pdf_utils import extract_text_from_pdf
 from providers import PROVIDERS
 
 MAX_RESUMES = 1000
+
+
+def extract_resume_text(filename: str, file_bytes: bytes) -> tuple[str, str | None]:
+    extension = filename.lower().rsplit(".", 1)[-1] if "." in filename else ""
+    if extension == "pdf":
+        return extract_text_from_pdf(file_bytes, filename)
+    if extension == "docx":
+        return extract_text_from_docx(file_bytes, filename)
+    return "", f"Unsupported file type: .{extension}"
 
 st.set_page_config(page_title="AI Resume Screener", page_icon="🧾", layout="wide")
 
@@ -43,10 +53,10 @@ job_description = st.text_area(
     placeholder="e.g. Senior Backend Engineer\n\nMust-Haves:\n- 5+ years of Python\n- ...\n\nNice-to-Haves:\n- AWS experience\n- ...",
 )
 
-st.subheader("2. Upload Resumes (PDF)")
+st.subheader("2. Upload Resumes (PDF or Word)")
 uploaded_files = st.file_uploader(
-    f"Upload up to {MAX_RESUMES} PDF resumes",
-    type=["pdf"],
+    f"Upload up to {MAX_RESUMES} resumes (.pdf or .docx)",
+    type=["pdf", "docx"],
     accept_multiple_files=True,
 )
 
@@ -65,9 +75,9 @@ if run_clicked:
     else:
         resumes: list[tuple[str, str]] = []
         extraction_errors: list[tuple[str, str]] = []
-        with st.spinner("Extracting text from PDFs..."):
+        with st.spinner("Extracting text from resumes..."):
             for f in uploaded_files:
-                text, err = extract_text_from_pdf(f.read(), f.name)
+                text, err = extract_resume_text(f.name, f.read())
                 if err:
                     extraction_errors.append((f.name, err))
                 else:

@@ -2,7 +2,7 @@
 
 ## What it does
 
-You give it a job description and a stack of resumes (PDF files) — it reads every resume, compares it against the job's requirements, and hands you back a ranked shortlist.
+You give it a job description and a stack of resumes (PDF or Word files) — it reads every resume, compares it against the job's requirements, and hands you back a ranked shortlist.
 
 For each candidate you get:
 - A **match score** out of 100
@@ -36,7 +36,7 @@ You can screen up to 1,000 resumes in one go, and you choose which AI does the r
 
 4. In the sidebar, **choose your AI provider** and **paste in your API key**.
 
-5. **Paste the job description** and **upload the resumes** (PDF only).
+5. **Paste the job description** and **upload the resumes** (.pdf or .docx).
 
 6. Click **Run Screening** and wait for the leaderboard to fill in.
 
@@ -45,5 +45,5 @@ You can screen up to 1,000 resumes in one go, and you choose which AI does the r
 ## Good to know
 
 - Your API key is never saved — you enter it fresh each time you open the app, and it's only used to talk to the AI provider you picked.
-- Resumes need to be real, text-based PDFs. A scanned photo/image of a resume with no selectable text won't work.
+- Resumes need to have real, selectable text. A scanned photo/image of a resume (PDF or Word) with no selectable text won't work.
 - If you're on a free-tier API key, lower "Max concurrent requests" in the sidebar's Advanced settings so you don't hit rate limits when screening a large batch.
